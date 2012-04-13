@@ -7,11 +7,11 @@ require "meta_pairs/version"
 Gem::Specification.new do |s|
   s.name        = "meta_pairs"
   s.version     = MetaPairs::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of MetaPairs."
-  s.description = "TODO: Description of MetaPairs."
+  s.authors     = ["Barry Paul"]
+  s.email       = ["bpaul@planet-hood.com"]
+  s.homepage    = "https://github.com/qstream/meta_pairs"
+  s.summary     = "Summary of MetaPairs."
+  s.description = "Description of MetaPairs."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 
