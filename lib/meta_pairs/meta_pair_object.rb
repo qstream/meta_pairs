@@ -8,13 +8,13 @@ module MetaPairs
 
     module ClassMethods
       def owns_meta_pairs
-        has_many :meta_pairs, :as => :owner, :dependent => :destroy
+        has_many :meta_pairs, :as => :owner, :dependent => :destroy, :class_name => "MetaPair"
         class << self
           def find_by_meta_key(key)
-            self.find(:all, :joins => :meta_pairs, :conditions => {:meta_pairs => {:key => key}} )
+            joins(:meta_pairs).where(:meta_pairs => {:key => key})
           end
           def find_by_meta_pair(key, value)
-            self.find(:all, :joins => :meta_pairs, :conditions => {:meta_pairs => {:key => key, :value => value}} )
+            joins(:meta_pairs).where(:meta_pairs => {:key => key, :value => value})
           end
         end
         include MetaPairs::MetaPairObject::OwnsInstanceMethods
@@ -23,10 +23,10 @@ module MetaPairs
         has_many :meta_pairs, :as => :object, :dependent => :destroy
         class << self
           def find_by_meta_key(key)
-            self.find(:all, :joins => :meta_pairs, :conditions => {:meta_pairs => {:key => key}} )
+            joins(:meta_pairs).where(:meta_pairs => {:key => key})
           end
           def find_by_meta_pair(key, value)
-            self.find(:all, :joins => :meta_pairs, :conditions => {:meta_pairs => {:key => key, :value => value}} )
+            joins(:meta_pairs).where(:meta_pairs => {:key => key, :value => value})
           end
         end
         include MetaPairs::MetaPairObject::HasInstanceMethods
@@ -70,16 +70,6 @@ module MetaPairs
         end
       end
 
-      protected
-
-      def define_dynamic_finder(attribute)
-        self.class.class_eval <<-end_eval
-          def #{attribute}
-            pair = self.meta_pairs.find_by_key("#{attribute}")
-            pair ? pair.value : nil
-          end
-          end_eval
-      end
     end
   end
 end

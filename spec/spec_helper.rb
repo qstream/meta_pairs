@@ -13,6 +13,8 @@ RSpec.configure do |config|
   config.include RSpec::Matchers
   config.color_enabled = true
 
+  load(File.dirname(__FILE__) + '/schema.rb')
+
   # == Mock Framework
   config.mock_with :rspec
 

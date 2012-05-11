@@ -23,5 +23,8 @@ describe MetaPairs do
     it {should be_valid}
     it {@thing.respond_to?(:get_value).should be_true}
     it {Thing.respond_to?(:find_by_meta_key).should be_true}
+    it "Should allow object destruction" do
+      @thing.destroy.should be_true
+    end
   end
 end

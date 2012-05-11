@@ -1,4 +1,5 @@
 require 'meta_pairs/version'
+require 'meta_pairs/meta_pair'
 
 module MetaPairs
   autoload :MetaPairObject,   'meta_pairs/meta_pair_object'
