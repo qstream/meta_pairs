@@ -39,7 +39,7 @@ module MetaPairs
     end
 
     module HasInstanceMethods
-      def get_value(key, owner = null)
+      def get_value(key, owner=nil)
         if owner.present?
           mp = meta_pairs.owned_by(owner).find_by_key(key)
         else
@@ -52,7 +52,7 @@ module MetaPairs
         end
       end
 
-      def add_pair(key, value, owner = null, is_public = false)
+      def add_pair(key, value, owner=nil, is_public=false)
         if !value || value.blank?
           if owner.present?
             mp = meta_pairs.owned_by(owner).find_by_key(key)
