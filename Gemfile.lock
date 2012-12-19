@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    meta_pairs (0.0.4)
+    meta_pairs (0.0.5)
       rails (~> 3.1.4)
 
 GEM

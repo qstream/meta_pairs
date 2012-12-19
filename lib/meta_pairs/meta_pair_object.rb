@@ -41,9 +41,17 @@ module MetaPairs
     module HasInstanceMethods
       def get_value(key, owner=nil)
         if owner.present?
-          mp = meta_pairs.owned_by(owner).find_by_key(key)
+          if meta_pairs.loaded?
+            mp = meta_pairs.detect{ |mp| mp.owner_id == owner.id && mp.owner_type = owner.class.base_class.name && mp.key == key }
+          else
+            mp = meta_pairs.owned_by(owner).find_by_key(key)
+          end
         else
-          mp = meta_pairs.find_by_key(key)
+          if meta_pairs.loaded?
+            mp = meta_pairs.detect{ |mp| mp.key == key }
+          else
+            mp = meta_pairs.find_by_key(key)
+          end
         end
         if mp
           mp.value
@@ -60,6 +68,9 @@ module MetaPairs
             mp = meta_pairs.find_by_key(key)
           end
           mp.destroy if mp
+          if mp && meta_pairs.loaded?
+            self.association(:meta_pairs).reset
+          end
         else
           if owner.present?
             mp = meta_pairs.owned_by(owner).find_or_initialize_by_key(key)
@@ -67,6 +78,9 @@ module MetaPairs
             mp = meta_pairs.find_or_initialize_by_key(key)
           end
           mp.update_attributes(:value => value, :public => is_public)
+          if meta_pairs.loaded?
+            self.association(:meta_pairs).reset
+          end
         end
       end
 
