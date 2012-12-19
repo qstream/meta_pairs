@@ -41,9 +41,17 @@ module MetaPairs
     module HasInstanceMethods
       def get_value(key, owner=nil)
         if owner.present?
-          mp = meta_pairs.owned_by(owner).find_by_key(key)
+          if meta_pairs.loaded?
+            mp = meta_pairs.detect{ |mp| mp.owner_id == owner.id && mp.owner_type = owner.class.base_class.name && mp.key == key }
+          else
+            mp = meta_pairs.owned_by(owner).find_by_key(key)
+          end
         else
-          mp = meta_pairs.find_by_key(key)
+          if meta_pairs.loaded?
+            mp = meta_pairs.detect{ |mp| mp.key == key }
+          else
+            mp = meta_pairs.find_by_key(key)
+          end
         end
         if mp
           mp.value
