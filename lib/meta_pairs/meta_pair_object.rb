@@ -1,4 +1,3 @@
-
 module MetaPairs
   module MetaPairObject #:nodoc:
 
@@ -34,7 +33,7 @@ module MetaPairs
     end
     module OwnsInstanceMethods
       def get_keys
-        meta_pairs.keys.map {|mp| mp.key}
+        meta_pairs.keys.map(&:key)
       end
     end
 
