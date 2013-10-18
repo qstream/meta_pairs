@@ -35,6 +35,10 @@ module MetaPairs
       def get_keys
         meta_pairs.keys.map(&:key)
       end
+
+      def delete_key(key)
+        meta_pairs.where(key: key).delete_all
+      end
     end
 
     module HasInstanceMethods
